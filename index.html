@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=
+
+"en">
+
+<head>
+
+ <style>
+      body {
+        background-color: lightblue;
+      }
+    </style>
+<meta charset=
+
+"UTF-8">
+
+<meta name=
+
+"viewport"
+
+content=
+
+"width=device-width,
+
+initial-scale=1.0">
+<title>Call Form</title>
+</head>
+<body>
+<form id=
+
+"callForm">
+<h3>Call Type</h3>
+All fields must be completed.
+<br>
+<br>
+<label>
+<input type=
+
+"radio" name=
+
+"callType"
+
+value=
+
+"Inbound Call" required> Inbound Call
+</label>
+<label>
+<input type=
+
+"radio" name=
+
+"callType"
+
+value=
+
+"Outbound Call"> Outbound Call
+</label>
+<br>
+<br>
+
+<label for=
+
+"name">Name:&nbsp;&nbsp;&nbsp;&nbsp;</label>
+
+<input type=
+
+"text" id=
+
+"name"
+
+name=
+
+"name" required>
+<br>
+<br>
+<label for=
+
+"number">Number:&nbsp;</label>
+
+<input type=
+
+"text" id=
+
+"number"
+
+name=
+
+"number" required>
+<br>
+<br>
+</div>
+<h3>Role</h3>
+<label>
+<input type=
+
+"radio" name=
+
+"role"
+
+value=
+
+“Director/Trustee” required> Director/Trustee
+</label>
+<label>
+<input type=
+
+"radio" name=
+
+"role"
+
+value=
+
+“Accountant”> Accountant
+</label>
+<label>
+<input type=
+
+"radio" name=
+
+"role"
+
+value=
+
+“Accounts Internal”> Accounts Internal
+</label>
+<label>
+<input type=
+
+"radio" name=
+
+"role"
+
+value=
+
+“Other”> Other
+</label>
+<br>
+</div>
+
+<h3>Call was recorded</h3>
+<label>
+<input type=
+
+"radio" name=
+
+"recorded"
+
+value=
+
+"Yes" required> Yes
+</label>
+<label>
+<input type=
+
+"radio" name=
+
+"recorded"
+
+value=
+
+"No"> No
+</label>
+<br>
+
+<h3>Reason for call</h3>
+<div id=
+
+"reasonForCall">
+
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Registration Prompt> Registration Prompt
+
+</label>
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Wages Discrepancy> Wages Discrepancy
+
+</label>
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Support> Support
+
+</label>
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Notification of Registration/Assessment> Notification of Registration/Assessment
+
+</label>
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Reassessment> Reassessment
+
+</label>
+<br>
+<br>
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Grouping> Grouping
+
+</label>
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Contractors> Contractors
+
+</label>
+<label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Request to remit> Request to remit
+
+</label>
+ <label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Payment> Payment
+
+</label>
+  <label>
+<input type=
+
+"checkbox"
+
+name=
+
+"reason" value=
+
+Other> Other
+
+</label>
+                                              
+</div>
+<br>
+
+<label for=
+
+"callNotes"><b>Call Notes:</
+
+label>
+<br>
+<textarea id=
+
+"callNotes"
+
+name=
+
+"callNotes" rows=
+
+"8" cols=
+"50"
+
+required></textarea>
+
+<br>
+
+<button type=
+
+"button"
+
+onclick=
+
+"copyToClipboard()">Copy to
+
+Clipboard</button>
+</form>
+
+    <script>
+       function copyToClipboard() {
+  // Get the user input values and sanitize them
+  const callType = sanitizeInput(document.querySelector('input[name="callType"]:checked').value);
+  const name = sanitizeInput(document.getElementById('name').value);
+  const number = sanitizeInput(document.getElementById('number').value);
+  const recorded = sanitizeInput(document.querySelector('input[name="recorded"]:checked').value);
+  const role = document.querySelector('input[name="role"]:checked').value;
+  const reasons = document.querySelectorAll('input[name="reason"]:checked');
+  const callNotes = sanitizeInput(document.getElementById('callNotes').value);
+
+  // Sanitize each reason for call checkbox value
+  let reasonList = '';
+  reasons.forEach(reason => {
+    reasonList += sanitizeInput(reason.value) + ', ';
+  });
+  reasonList = reasonList.slice(0, -2);
+
+  // Format the sanitized data
+  const formattedData = `
+Call Type: ${callType}
+Name: ${name}
+Number: ${number}
+Call was recorded: ${recorded}
+Role: ${role}
+Reason for call: ${reasonList}
+Call Notes: ${callNotes}
+  `;
+
+  // Create a temporary textarea element to copy the formatted data to clipboard
+  const textArea = document.createElement('textarea');
+  textArea.value = formattedData;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textArea);
+
+  // Alert the user that the data has been copied to clipboard
+  alert('Data copied to clipboard');
+}
+
+// Sanitize user input by removing any non-alphanumeric characters and leading/trailing spaces
+function sanitizeInput(input) {
+  const sanitizedInput = input.replace(/[^a-zA-Z0-9 ]/g, '').trim();
+  return sanitizedInput;
+}
+   
+    </script>
+</body>
+</html>
